@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+  <head>@header</head>
+  <body>
+    <h2 class="header">weKanban: Simple Kanban board</h2>
+    <span id="message" class="message clearFloat"></span>
+    <br/>
+    <span class="linkLabel clearFloat"><a href="/card">[Add new story to Ready Phase]</a></span>
+    <div id="refreshable">
+      <div class="phase" id="readyPhase">
+        <h3 class="message" title="Stories ready for development. Limit is set to 3">Ready [3]</h3>
+        @stories("ready")
+      </div>
+      <div class="phase" id="devPhase">
+        <h3 class="message" title="Stories in progress. Limit is set to 2">Dev [2]</h3>
+        @stories("dev")
+      </div>
+      <div class="phase" id="testPhase">
+        <h3 class="message" title="Stories that are tested. Limit is set to 2">Test [2]</h3>
+        @stories("test")
+      </div>
+      <div class="phase" id="deployPhase" title="Ready for production deployment">
+        <h3 class="message">Deploy</h3>
+        @stories("deploy")
+      </div>
+    </div>
+  </body>
+</html>
+
+@stories(phase: String) = {
+  @for(story <- Story.findAllByPhase(phase)) {
+    <div id=@story.number class="story">
+      <fieldset>
+        <legend>@story.number</legend>
+        <div class="section">
+          <label>@story.title</label>
+        </div>
+      </fieldset>
+    </div>
+  }
+}
+
+@header = {
+  <meta charset="UTF-8" />
+  <title>weKanban: A simple Kanban board</title>
+  <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
+}
