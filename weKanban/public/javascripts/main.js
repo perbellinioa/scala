@@ -12,17 +12,15 @@ function moveCard(ui, number, phase) {
            }
          }).done( function (message) {
             $('#message').html(message)
-          }
+         }
   );
 }
 function errorCallable(ui) {
-  ui.draggable.animate(ui.draggable.data().origPosition,"slow");
+  ui.draggable.animate(ui.draggable.data().uiDraggable.originalPosition,"slow");
 }
 $( function() {
   $(".story").draggable({
-    start: function(){
-      $(this).data("origPosition",$(this).position());
-    }
+    refreshPositions: true,
   });
   $("#readyPhase").droppable({
                                drop: function (event, ui) {
